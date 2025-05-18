@@ -4,13 +4,13 @@ import string
 
 def read_lyrics(file):
    lyrics = open(file)
-   Song=str(lyrics.read().lower().split())
+   Song=str(lyrics.read().lower())
    #Turns the string to lowercase and into a split string
-   print(Song)
    lyrics.close()
+   SongList=Song.split()
    #closes file
-   return Song
-# Changed so that it is automatically changed to a plit string
+   return SongList
+# Changed so that it is automatically changed to a split string
 # I made the variable song different so that i could close the file
 
 
@@ -18,43 +18,41 @@ def input_lyrics():
     lyrics=str(input()).lower().split()
     return lyrics
 
-def get_lyrics_fl(lyrics,type=list):
-    lyrics_fl=list(word[0] for word in lyrics)
-    #This is the problem because it doesn't associate "Word" with each individual item in list but instead treats every individual character as a "Word"
-    print(word[0] for word in lyrics)
-    #Case in point
-    return(lyrics_fl)
 
-lyrics=read_lyrics("lyrics.txt")
+def AlphCheck (Song,StartingLetter):
+    #Takes the Song and goes through the game starting at the chosen initial letter (Defined by a value between 0 and 25)
+    FirstLetter = list(word[0] for word in Song)
+    #The def function was just one line of code so i simplified it to get the first letter of each word in the song
+    alphabet = list(string.ascii_lowercase)
+    #Creates a list with the letters in the alphabet
+    i=0
+    j=StartingLetter
 
-alphabet = list(string.ascii_lowercase)
-FirstLetter = get_lyrics_fl(lyrics)
+    while (i<len(FirstLetter)):
+        if j<26:
+            if FirstLetter[i] is alphabet[j]:
+                #print(Song[i])
+                #!!!!!!!!!!!!!!!!!!!Erase Comment hashtag above to see which words get you through !!!!!!!!!!!!!!!!!! <----------------------------------------------------------------------------
+                j+=1
+        i+=1       
 
-'''
-#Frankenstein Code Attempt to get the length of the text file (Deemed Unnecesary)
-with open(r'Lyrics.txt','r') as file:
-        length=0
-        data = file.read()
-        w=data.split()
-        length+=len(w)
-        print(length)
-'''
+    if j<26:
+        Text=alphabet[StartingLetter] + '->' + alphabet[j]
+        print(Text)
+        total=j-StartingLetter
+    if j==26:
+        Text=alphabet[StartingLetter] + '->end'
+        print(Text)
+        total=26-StartingLetter
+    return total
 
-i = 0
-j = 0
-a=0
-while (a<len(lyrics)):
-    #Different attemot to make the lyrics seperat correctly (Didn't work)
-    print(lyrics[a])
-    a+=1
+song=read_lyrics("lyrics.txt")
 
-print(FirstLetter)
-while (i<len(FirstLetter)):
-    #Supposedly for every first letter there is a corrosponding "Word"
-    if FirstLetter[i] is alphabet[j]:
-        #Check to match with the apprpriate letter (This Works :))
-        print('match')
-        j+=1
-    print(lyrics[i])
-    #Output is printing each letter one by one instead of word by word
+i=0
+Tally=0
+while (i<26):
+    #Checks for every letter of the alphabet
+    Tally+=AlphCheck(song,i)
     i+=1
+Average=Tally/26
+print(Average)
