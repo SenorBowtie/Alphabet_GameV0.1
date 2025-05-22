@@ -21,7 +21,18 @@ def input_lyrics():
 
 def AlphCheck (Song,StartingLetter):
     #Takes the Song and goes through the game starting at the chosen initial letter (Defined by a value between 0 and 25)
-    FirstLetter = list(word[0] for word in Song)
+    #FirstLetter = list(word[0] for word in Song)
+    FirstLetter = []
+    for word in song:
+        if word[0] in string.punctuation:
+            if word[1:3] == 'ex':
+                FirstLetter.append('x')
+            else:
+                FirstLetter.append(word[1])
+        elif word[0:2] == 'ex':
+            FirstLetter.append('x')
+        else:
+            FirstLetter.append(word[0])
     #The def function was just one line of code so i simplified it to get the first letter of each word in the song
     alphabet = list(string.ascii_lowercase)
     #Creates a list with the letters in the alphabet
@@ -31,7 +42,7 @@ def AlphCheck (Song,StartingLetter):
     while (i<len(FirstLetter)):
         if j<26:
             if FirstLetter[i] is alphabet[j]:
-                #print(Song[i])
+                print(Song[i])
                 #!!!!!!!!!!!!!!!!!!!Erase Comment hashtag above to see which words get you through !!!!!!!!!!!!!!!!!! <----------------------------------------------------------------------------
                 j+=1
         i+=1       
